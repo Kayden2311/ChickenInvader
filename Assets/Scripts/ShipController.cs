@@ -1,0 +1,42 @@
+using System.Collections;
+using UnityEngine;
+
+public class ShipController : MonoBehaviour
+{
+    public static ShipController Instance;
+    [SerializeField] private GameObject ShipPrefabs;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public void SpawnShip()
+    {
+        var newShip = Instantiate(ShipPrefabs, Camera.main.ViewportToWorldPoint(new Vector3(0.5f, -0.5f, 0)), Quaternion.identity);
+        var point = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 0));
+        point.z = 0;
+        StartCoroutine(SpawnShipToPoint(newShip, point));
+    }
+
+    IEnumerator SpawnShipToPoint(GameObject Ship, Vector3 point)
+    {
+        float timer = 0;
+        while(Ship && Ship.transform.position != point)
+        {
+            timer += Time.fixedDeltaTime;
+            Ship.transform.position = Vector3.Lerp(Ship.transform.position, point, timer);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+}
