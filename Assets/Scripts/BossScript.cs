@@ -7,17 +7,21 @@ public class BossScript : MonoBehaviour
     [SerializeField] private int Health = 100;
     [SerializeField] private GameObject VFX;
 
+    private GameState currentState;
     public static BossScript Instance;
+
     private void Awake()
     {
         Instance = this;
     }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         StartCoroutine(SpawnEgg());
         StartCoroutine(MoveBossToRandomPoint());
     }
+
     public void PutDamage(int Damage)
     {
         Health -= Damage;
@@ -26,23 +30,25 @@ public class BossScript : MonoBehaviour
             Destroy(gameObject);
             var vfx = Instantiate(VFX, transform.position, Quaternion.identity);
             Destroy(vfx, 1f);
+            GameController.Instance.ChangeState(GameState.Win);
         }
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
-    IEnumerator SpawnEgg() 
+
+    private IEnumerator SpawnEgg()
     {
-        while(true)
+        while (true)
         {
-            Instantiate(EggPrefabs, transform.position, Quaternion.identity); 
+            Instantiate(EggPrefabs, transform.position, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(0.0f, 1.0f));
         }
     }
-    IEnumerator MoveBossToRandomPoint()
+
+    private IEnumerator MoveBossToRandomPoint()
     {
         Vector3 point = GetRandomPoint();
         while (transform.position != point)
@@ -52,7 +58,8 @@ public class BossScript : MonoBehaviour
         }
         StartCoroutine(MoveBossToRandomPoint());
     }
-    Vector3 GetRandomPoint() 
+
+    private Vector3 GetRandomPoint()
     {
         // Use viewport coordinates (0–1 range) mapped to world space
         // X: full width (0 to 1), Y: upper half of the screen (0.5 to 1)
