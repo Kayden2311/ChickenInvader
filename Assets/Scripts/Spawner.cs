@@ -64,6 +64,7 @@ public class Spawner : MonoBehaviour
             Vector3 spawnPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, 0));
             spawnPos.z = 0;
             Instantiate(BossPrefab, spawnPos, Quaternion.identity);
+            GameController.Instance.ChangeState(GameState.BossFight);
         }
     }
 }

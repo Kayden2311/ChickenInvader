@@ -41,6 +41,10 @@ public class ChickenScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        Spawner.Instance.DecreaseChicken();
+        // Check if Spawner.Instance exists before calling to avoid MissingReferenceException
+        if (Spawner.Instance != null)
+        {
+            Spawner.Instance.DecreaseChicken();
+        }
     }
 }

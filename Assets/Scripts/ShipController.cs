@@ -14,6 +14,12 @@ public class ShipController : MonoBehaviour
 
     public void SpawnShip()
     {
+        if (ShipPrefabs == null)
+        {
+            Debug.LogError("ShipPrefabs is not assigned in ShipController!");
+            return;
+        }
+
         var newShip = Instantiate(ShipPrefabs, Camera.main.ViewportToWorldPoint(new Vector3(0.5f, -0.5f, 0)), Quaternion.identity);
         var point = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.1f, 0));
         point.z = 0;
