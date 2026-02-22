@@ -7,39 +7,38 @@ public class ChickenScript : MonoBehaviour
     [SerializeField] private GameObject EggPrefabs;
     [SerializeField] private int score;
     [SerializeField] private GameObject ChickenLegPrefabs;
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         StartCoroutine(SpawnEgg());
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
         {
-            ScoreController.Instance.GetScore(score);
+            GameController.Instance.AddScore(score);
             Instantiate(ChickenLegPrefabs, transform.position, Quaternion.identity);
             Destroy(collision.gameObject);
             Destroy(gameObject);
-            
         }
     }
 
-    IEnumerator SpawnEgg() 
+    private IEnumerator SpawnEgg()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(Random.Range(2, 15));
-            Instantiate(EggPrefabs, transform.position, Quaternion.identity); 
+            Instantiate(EggPrefabs, transform.position, Quaternion.identity);
         }
     }
+
     private void OnDestroy()
     {
         Spawner.Instance.DecreaseChicken();

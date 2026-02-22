@@ -11,20 +11,21 @@ public class ShipScript : MonoBehaviour
     [SerializeField] private int ScoreChickenLeg;
     [SerializeField] private int chickenLegsPerTier = 10;
     private int currentChickenLegCount;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         StartCoroutine(DisableeShield());
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Move();
         Fire();
     }
 
-    void Move()
+    private void Move()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
@@ -38,9 +39,9 @@ public class ShipScript : MonoBehaviour
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -TopLeftPoint.x, TopLeftPoint.x), Mathf.Clamp(transform.position.y, -TopLeftPoint.y, TopLeftPoint.y), 0);
     }
 
-    void Fire() 
+    private void Fire()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             var bulletObj = Instantiate(BulletList[CurrentBulletTier], transform.position, Quaternion.identity);
             var bulletScript = bulletObj.GetComponent<BulletScipt>();
@@ -50,20 +51,23 @@ public class ShipScript : MonoBehaviour
             }
         }
     }
-    IEnumerator DisableeShield()
+
+    private IEnumerator DisableeShield()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5f);
         Shield.SetActive(false);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!Shield.activeSelf && (collision.CompareTag("Egg") || collision.CompareTag("Chicken")))
         {
-            Destroy(gameObject);
-        } else if (collision.CompareTag("ChickenLeg"))
+            Die();
+        }
+        else if (collision.CompareTag("ChickenLeg"))
         {
             Destroy(collision.gameObject);
-            ScoreController.Instance.GetScore(ScoreChickenLeg);
+            GameController.Instance.AddScore(ScoreChickenLeg);
             currentChickenLegCount++;
             if (currentChickenLegCount >= chickenLegsPerTier)
             {
@@ -75,13 +79,17 @@ public class ShipScript : MonoBehaviour
             }
         }
     }
-    private void OnDestroy()
+
+    private void Die()
     {
-        if (gameObject.scene.isLoaded)
+        if (VFX != null)
         {
             var vfx = Instantiate(VFX, transform.position, Quaternion.identity);
             Destroy(vfx, 1f);
-            ShipController.Instance.SpawnShip();
         }
+
+        GameController.Instance.PlayerDied();
+
+        Destroy(gameObject);
     }
 }
