@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6724228275774597248}
   m_Layer: 0
   m_Name: Ship
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +119,8 @@ MonoBehaviour:
   CurrentBulletTier: 0
   VFX: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
   Shield: {fileID: 6283704484017702829}
+  ScoreChickenLeg: 0
+  chickenLegsPerTier: 10
 --- !u!60 &626765264663666177
 PolygonCollider2D:
   m_ObjectHideFlags: 0

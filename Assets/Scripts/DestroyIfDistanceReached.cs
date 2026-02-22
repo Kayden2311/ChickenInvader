@@ -18,8 +18,6 @@ public class DestroyIfDistanceReached : MonoBehaviour
     void DestroyIfTrue()
     {
         Vector3 CenterScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2), 0);
-        Debug.Log(Vector3.Distance(transform.position, CenterScreen));
-        Debug.Log(transform.position);
         if (Vector3.Distance(transform.position, CenterScreen) > Distances)
             Destroy(this.gameObject);
     }

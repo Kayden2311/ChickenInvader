@@ -57,14 +57,19 @@ public class Spawner : MonoBehaviour
     public void DecreaseChicken()
     {
         currentChicken--;
-        if (currentChicken <= 0)
+        Debug.Log($"Grid chicken count: {currentChicken}");
+        
+        if (currentChicken <= 0 && BossPrefab != null)
         {
-            // Spawn the boss prefab when all chickens are destroyed
-            // Spawn slightly above the top center of the screen
-            Vector3 spawnPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, 0));
-            spawnPos.z = 0;
-            Instantiate(BossPrefab, spawnPos, Quaternion.identity);
-            GameController.Instance.ChangeState(GameState.BossFight);
+            // Only spawn boss once
+            if (GameController.Instance.CurrentState != GameState.BossFight)
+            {
+                // Spawn the boss prefab when all chickens are destroyed
+                Vector3 spawnPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, 0));
+                spawnPos.z = 0;
+                Instantiate(BossPrefab, spawnPos, Quaternion.identity);
+                GameController.Instance.ChangeState(GameState.BossFight);
+            }
         }
     }
 }
