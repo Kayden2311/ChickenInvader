@@ -77,6 +77,13 @@ public class GameController : MonoBehaviour
         UpdateScoreUI();
     }
 
+    public void DeductScore(int amount)
+    {
+        Score -= amount;
+        if (Score < 0) Score = 0;
+        UpdateScoreUI();
+    }
+
     private void UpdateScoreUI()
     {
         if (ScoreController.Instance != null)
@@ -88,13 +95,27 @@ public class GameController : MonoBehaviour
     public void PlayerDied()
     {
         PlayerLives--;
+        Debug.Log($"[GameController] PlayerDied - Lives remaining: {PlayerLives}");
+        
         if (PlayerLives > 0)
         {
             ShipController.Instance.SpawnShip();
         }
         else
         {
-            ChangeState(GameState.GameOver);
+            Debug.Log("[GameController] No lives left, checking for ContinueUIController...");
+            
+            // Show continue screen instead of immediate game over
+            if (ContinueUIController.Instance != null)
+            {
+                Debug.Log("[GameController] ContinueUIController found, showing continue screen...");
+                ContinueUIController.Instance.ShowContinueScreen();
+            }
+            else
+            {
+                Debug.LogWarning("[GameController] ContinueUIController not found! Going to GameOver...");
+                ChangeState(GameState.GameOver);
+            }
         }
     }
 }
