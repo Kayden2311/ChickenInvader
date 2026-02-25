@@ -205,3 +205,8 @@ MonoBehaviour:
   EggPrefabs: {fileID: 6182871362765418882, guid: e9a47d9cf23ec2e41910b7fa8a531690, type: 3}
   score: 100
   ChickenLegPrefabs: {fileID: 1936530321601004345, guid: 78e00afcc370fc94689feed6e8a0dead, type: 3}
+  upgradePrefabs:
+  - {fileID: 8695812814362214292, guid: ca8bf15ae14c9fa46be2c73e4fc4eae1, type: 3}
+  - {fileID: 1803619374751807057, guid: d7a92a1d58d00cf40803741a9ee40c7b, type: 3}
+  - {fileID: 8968695539944606734, guid: a06affa51e5f2d64595701087eee45e5, type: 3}
+  upgradeDropChance: 0.3

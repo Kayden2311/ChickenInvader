@@ -8,6 +8,11 @@ public class ChickenScript : MonoBehaviour
     [SerializeField] private int score;
     [SerializeField] private GameObject ChickenLegPrefabs;
 
+    [Header("Upgrade Drop")]
+    [SerializeField] private GameObject[] upgradePrefabs;
+
+    [SerializeField] private float upgradeDropChance = 0.3f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -23,10 +28,19 @@ public class ChickenScript : MonoBehaviour
     {
         if (collision.CompareTag("Bullet"))
         {
-            GameController.Instance.AddScore(score);
-            Instantiate(ChickenLegPrefabs, transform.position, Quaternion.identity);
+            ChickenDie();
             Destroy(collision.gameObject);
-            Destroy(gameObject);
+        }
+    }
+
+    private void TryDropUpgrade()
+    {
+        if (upgradePrefabs.Length == 0) return;
+
+        if (Random.value <= upgradeDropChance)
+        {
+            int index = Random.Range(0, upgradePrefabs.Length);
+            Instantiate(upgradePrefabs[index], transform.position, Quaternion.identity);
         }
     }
 
@@ -46,5 +60,14 @@ public class ChickenScript : MonoBehaviour
         {
             Spawner.Instance.DecreaseChicken();
         }
+    }
+
+    public void ChickenDie()
+    {
+        GameController.Instance.AddScore(score);
+        Instantiate(ChickenLegPrefabs, transform.position, Quaternion.identity);
+        TryDropUpgrade();
+
+        Destroy(gameObject);
     }
 }
