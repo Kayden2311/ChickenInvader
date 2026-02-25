@@ -5,6 +5,8 @@ public class Spawner : MonoBehaviour
     private float gridSize = 1;
     private Vector3 SpawnPos;
     private int currentChicken;
+    private bool bossSpawned = false;
+    
     [SerializeField] private GameObject ChickenPrefabs;
     [SerializeField] private Transform ChickenGrid;
     [SerializeField] private GameObject BossPrefab;
@@ -59,11 +61,12 @@ public class Spawner : MonoBehaviour
         currentChicken--;
         Debug.Log($"Grid chicken count: {currentChicken}");
         
-        if (currentChicken <= 0 && BossPrefab != null)
+        if (currentChicken <= 0 && BossPrefab != null && !bossSpawned)
         {
             // Only spawn boss once
             if (GameController.Instance.CurrentState != GameState.BossFight)
             {
+                bossSpawned = true;
                 // Spawn the boss prefab when all chickens are destroyed
                 Vector3 spawnPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 1.1f, 0));
                 spawnPos.z = 0;

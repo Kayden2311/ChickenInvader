@@ -26,7 +26,6 @@ public class BulletScipt : MonoBehaviour
             BossScript.Instance.PutDamage(currentDamage);
             Destroy(gameObject);
         }
-
     }
 
     public void SetBulletTier(int tier)

@@ -22,8 +22,8 @@ public class ChickenScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        StartCoroutine(SpawnEgg());
         audioSource = GetComponent<AudioSource>();
+        StartCoroutine(SpawnEgg());
     }
 
     // Update is called once per frame

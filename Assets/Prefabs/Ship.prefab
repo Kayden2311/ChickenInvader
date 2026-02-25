@@ -154,7 +154,7 @@ MonoBehaviour:
   ScoreChickenLeg: 0
   chickenLegsPerTier: 10
   firesound: {fileID: 0}
-  laserBeamPrefab: {fileID: 0}
+  laserBeamPrefab: {fileID: 375650275515804512, guid: b76bdc7d25bbff14cb759e2574d1e0fd, type: 3}
   laserDuration: 5
   laserPoint: {fileID: 2147060244823411542}
 --- !u!60 &626765264663666177
