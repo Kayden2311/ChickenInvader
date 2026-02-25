@@ -1,27 +1,34 @@
 using System.Collections;
 using UnityEngine;
 
-public class DivingChickenScript: MonoBehaviour
+public class DivingChickenScript : MonoBehaviour
 {
     [Header("=== DROP ===")]
     [SerializeField] private GameObject eggPrefab;
+
     [SerializeField] private float minDropTime = 2f;
     [SerializeField] private float maxDropTime = 5f;
 
     [Header("=== SCORE ===")]
     [SerializeField] private int score = 10;
+
     [SerializeField] private GameObject chickenLegPrefab;
 
     private Vector3 moveDir;
     private float speed;
     private float destroyY;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip diveSound;
+
+    private AudioSource audioSource;
+
     public void Init(Vector3 direction, float moveSpeed, float destroyPosY)
     {
         moveDir = direction.normalized;
         speed = moveSpeed;
         destroyY = destroyPosY;
-
+        audioSource = GetComponent<AudioSource>();
         StartCoroutine(DropEggRoutine());
     }
 
@@ -55,7 +62,10 @@ public class DivingChickenScript: MonoBehaviour
 
             if (chickenLegPrefab != null)
                 Instantiate(chickenLegPrefab, transform.position, Quaternion.identity);
-
+            if (audioSource != null && diveSound != null)
+            {
+                audioSource.PlayOneShot(diveSound);
+            }
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }

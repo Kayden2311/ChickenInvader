@@ -4,8 +4,11 @@ using UnityEngine;
 public class BossScript : MonoBehaviour
 {
     [SerializeField] private GameObject EggPrefabs;
-    [SerializeField] private int Health = 100;
+    [SerializeField] private int Health = 200;
     [SerializeField] private GameObject VFX;
+    [SerializeField] private AudioClip dieSound;
+    [SerializeField] private AudioClip hurtSound;
+    private AudioSource audioSource;
 
     private GameState currentState;
     public static BossScript Instance;
@@ -20,15 +23,24 @@ public class BossScript : MonoBehaviour
     {
         StartCoroutine(SpawnEgg());
         StartCoroutine(MoveBossToRandomPoint());
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void PutDamage(int Damage)
     {
         Health -= Damage;
+        if (hurtSound != null)
+        {
+            audioSource.PlayOneShot(hurtSound);
+        }
         if (Health <= 0)
         {
             Destroy(gameObject);
             var vfx = Instantiate(VFX, transform.position, Quaternion.identity);
+            if (dieSound != null)
+            {
+                audioSource.PlayOneShot(dieSound);
+            }
             Destroy(vfx, 1f);
             GameController.Instance.ChangeState(GameState.Win);
         }

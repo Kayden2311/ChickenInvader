@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ChickenScript : MonoBehaviour
 {
@@ -13,10 +14,16 @@ public class ChickenScript : MonoBehaviour
 
     [SerializeField] private float upgradeDropChance = 0.3f;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip dieSound;
+
+    private AudioSource audioSource;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         StartCoroutine(SpawnEgg());
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -67,7 +74,10 @@ public class ChickenScript : MonoBehaviour
         GameController.Instance.AddScore(score);
         Instantiate(ChickenLegPrefabs, transform.position, Quaternion.identity);
         TryDropUpgrade();
-
+        if (audioSource != null && dieSound != null)
+        {
+            audioSource.PlayOneShot(dieSound);
+        }
         Destroy(gameObject);
     }
 }

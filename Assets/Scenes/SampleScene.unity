@@ -765,7 +765,6 @@ GameObject:
   m_Component:
   - component: {fileID: 855360239}
   - component: {fileID: 855360240}
-  - component: {fileID: 855360241}
   m_Layer: 0
   m_Name: ChickenGrid
   m_TagString: Untagged
@@ -810,11 +809,54 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1303456871 stripped
+--- !u!1 &1170998468
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 4454726154120210688, guid: dcb3ed6ceed418b4a914a4e9f121552f, type: 3}
-  m_PrefabInstance: {fileID: 3356268523754074091}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1170998469}
+  m_Layer: 0
+  m_Name: LaserPoint
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1170998469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170998468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.3351, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6749137872903805891}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1303456871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1303456879}
+  - component: {fileID: 1303456878}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!82 &1303456878
 AudioSource:
   m_ObjectHideFlags: 0
@@ -912,6 +954,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &1303456879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1303456871}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1431862829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,11 +1258,37 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &1935029501 stripped
+--- !u!1 &1935029501
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6283704484017702829, guid: dcb3ed6ceed418b4a914a4e9f121552f, type: 3}
-  m_PrefabInstance: {fileID: 3356268523754074091}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1935029502}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1935029502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935029501}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1952584148
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,6 +1551,10 @@ MonoBehaviour:
   Shield: {fileID: 8766238666453952582}
   ScoreChickenLeg: 400
   chickenLegsPerTier: 10
+  firesound: {fileID: 8300000, guid: 5dbc74a65da58144aa0a20190bcd4909, type: 3}
+  laserBeamPrefab: {fileID: 375650275515804512, guid: b76bdc7d25bbff14cb759e2574d1e0fd, type: 3}
+  laserDuration: 5
+  laserPoint: {fileID: 1170998469}
 --- !u!50 &2296779298547971710
 Rigidbody2D:
   serializedVersion: 5
@@ -1879,7 +1966,7 @@ PrefabInstance:
     - target: {fileID: 4178959288396634551, guid: dcb3ed6ceed418b4a914a4e9f121552f, type: 3}
       propertyPath: laserPoint
       value: 
-      objectReference: {fileID: 1638330565}
+      objectReference: {fileID: 0}
     - target: {fileID: 4178959288396634551, guid: dcb3ed6ceed418b4a914a4e9f121552f, type: 3}
       propertyPath: shieldObject
       value: 
@@ -1967,6 +2054,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8285987682939049947}
+  - {fileID: 1170998469}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8005581519362059355
@@ -2799,6 +2887,8 @@ GameObject:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1303456879}
+  - {fileID: 1935029502}
   - {fileID: 519420032}
   - {fileID: 2008094227}
   - {fileID: 619394802}
