@@ -1,7 +1,5 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class ChickenScript : MonoBehaviour
 {
@@ -11,7 +9,6 @@ public class ChickenScript : MonoBehaviour
 
     [Header("Upgrade Drop")]
     [SerializeField] private GameObject[] upgradePrefabs;
-
     [SerializeField] private float upgradeDropChance = 0.3f;
 
     [Header("Audio")]
@@ -19,16 +16,10 @@ public class ChickenScript : MonoBehaviour
 
     private AudioSource audioSource;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         StartCoroutine(SpawnEgg());
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,17 +28,6 @@ public class ChickenScript : MonoBehaviour
         {
             ChickenDie();
             Destroy(collision.gameObject);
-        }
-    }
-
-    private void TryDropUpgrade()
-    {
-        if (upgradePrefabs.Length == 0) return;
-
-        if (Random.value <= upgradeDropChance)
-        {
-            int index = Random.Range(0, upgradePrefabs.Length);
-            Instantiate(upgradePrefabs[index], transform.position, Quaternion.identity);
         }
     }
 
@@ -62,7 +42,6 @@ public class ChickenScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Check if Spawner.Instance exists before calling to avoid MissingReferenceException
         if (Spawner.Instance != null)
         {
             Spawner.Instance.DecreaseChicken();
@@ -72,12 +51,36 @@ public class ChickenScript : MonoBehaviour
     public void ChickenDie()
     {
         GameController.Instance.AddScore(score);
-        Instantiate(ChickenLegPrefabs, transform.position, Quaternion.identity);
+
+        if (ChickenLegPrefabs != null)
+            Instantiate(ChickenLegPrefabs, transform.position, Quaternion.identity);
+
         TryDropUpgrade();
+
         if (audioSource != null && dieSound != null)
-        {
             audioSource.PlayOneShot(dieSound);
-        }
+
         Destroy(gameObject);
+    }
+
+    public void DieByUlti()
+    {
+        StopAllCoroutines();
+
+        if (audioSource != null && dieSound != null)
+            audioSource.PlayOneShot(dieSound);
+
+        Destroy(gameObject);
+    }
+
+    private void TryDropUpgrade()
+    {
+        if (upgradePrefabs == null || upgradePrefabs.Length == 0) return;
+
+        if (Random.value <= upgradeDropChance)
+        {
+            int index = Random.Range(0, upgradePrefabs.Length);
+            Instantiate(upgradePrefabs[index], transform.position, Quaternion.identity);
+        }
     }
 }
