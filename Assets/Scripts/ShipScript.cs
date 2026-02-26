@@ -80,12 +80,26 @@ public class ShipScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (ultiPrefab == null) return;
-
-            if (GameController.Instance.Score >= ultiCost)
+            Debug.Log("[ShipScript] Space pressed!");
+            
+            if (ultiPrefab == null)
             {
+                Debug.LogError("[ShipScript] ultiPrefab is NULL! Please assign it in Inspector!");
+                return;
+            }
+
+            int currentScore = GameController.Instance.Score;
+            Debug.Log($"[ShipScript] Current score: {currentScore}, Ulti cost: {ultiCost}");
+
+            if (currentScore >= ultiCost)
+            {
+                Debug.Log("[ShipScript] Firing ulti!");
                 GameController.Instance.DeductScore(ultiCost);
                 Instantiate(ultiPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Debug.LogWarning($"[ShipScript] Not enough score! Need {ultiCost}, have {currentScore}");
             }
         }
     }

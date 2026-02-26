@@ -1,27 +1,18 @@
-using System.Collections;
 using UnityEngine;
 
 public class DivingChickenScript : MonoBehaviour
 {
-    [Header("=== DROP ===")]
-    [SerializeField] private GameObject eggPrefab;
-
-    [SerializeField] private float minDropTime = 2f;
-    [SerializeField] private float maxDropTime = 5f;
-
-    [Header("=== SCORE ===")]
+    [Header("Score")]
     [SerializeField] private int score = 10;
-
     [SerializeField] private GameObject chickenLegPrefab;
-
-    private Vector3 moveDir;
-    private float speed;
-    private float destroyY;
 
     [Header("Audio")]
     [SerializeField] private AudioClip diveSound;
 
     private AudioSource audioSource;
+    private Vector3 moveDir;
+    private float speed;
+    private float destroyY;
 
     public void Init(Vector3 direction, float moveSpeed, float destroyPosY)
     {
@@ -29,7 +20,6 @@ public class DivingChickenScript : MonoBehaviour
         speed = moveSpeed;
         destroyY = destroyPosY;
         audioSource = GetComponent<AudioSource>();
-        StartCoroutine(DropEggRoutine());
     }
 
     private void Update()
@@ -42,18 +32,6 @@ public class DivingChickenScript : MonoBehaviour
         }
     }
 
-    private IEnumerator DropEggRoutine()
-    {
-        while (true)
-        {
-            float t = Random.Range(minDropTime, maxDropTime);
-            yield return new WaitForSeconds(t);
-
-            if (eggPrefab != null)
-                Instantiate(eggPrefab, transform.position, Quaternion.identity);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Bullet"))
@@ -61,11 +39,15 @@ public class DivingChickenScript : MonoBehaviour
             GameController.Instance.AddScore(score);
 
             if (chickenLegPrefab != null)
+            {
                 Instantiate(chickenLegPrefab, transform.position, Quaternion.identity);
+            }
+            
             if (audioSource != null && diveSound != null)
             {
                 audioSource.PlayOneShot(diveSound);
             }
+            
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
