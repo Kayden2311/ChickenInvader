@@ -2500,7 +2500,7 @@ MonoBehaviour:
   chickenLegsPerTier: 10
   firesound: {fileID: 8300000, guid: 5dbc74a65da58144aa0a20190bcd4909, type: 3}
   laserBeamPrefab: {fileID: 375650275515804512, guid: b76bdc7d25bbff14cb759e2574d1e0fd, type: 3}
-  laserDuration: 5
+  laserDuration: 3
   laserPoint: {fileID: 1170998469}
 --- !u!50 &2296779298547971710
 Rigidbody2D:
@@ -2941,6 +2941,10 @@ PrefabInstance:
     - target: {fileID: 45572833246160137, guid: c05012c414a3cfa4582c019461083ccf, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3079738127888153464, guid: c05012c414a3cfa4582c019461083ccf, type: 3}
+      propertyPath: laserDuration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3683724632241932895, guid: c05012c414a3cfa4582c019461083ccf, type: 3}
       propertyPath: m_LocalPosition.x
