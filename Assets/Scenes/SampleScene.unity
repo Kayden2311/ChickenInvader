@@ -2370,7 +2370,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 199, y: 125}
+  m_AnchoredPosition: {x: 105, y: 72.568}
   m_SizeDelta: {x: 326.52, y: 145.1367}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2008094224
@@ -2502,6 +2502,8 @@ MonoBehaviour:
   laserBeamPrefab: {fileID: 375650275515804512, guid: b76bdc7d25bbff14cb759e2574d1e0fd, type: 3}
   laserDuration: 3
   laserPoint: {fileID: 1170998469}
+  ultiPrefab: {fileID: 8433818035583304114, guid: adb70652f4c3bbc42a95002b5ad79ebf, type: 3}
+  ultiCost: 7000
 --- !u!50 &2296779298547971710
 Rigidbody2D:
   serializedVersion: 5

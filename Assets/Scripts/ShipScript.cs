@@ -16,26 +16,27 @@ public class ShipScript : MonoBehaviour
 
     [Header("Laser")]
     [SerializeField] private GameObject laserBeamPrefab;
-
     [SerializeField] private float laserDuration = 5f;
     [SerializeField] private Transform laserPoint;
 
     private GameObject activeLaser;
     private bool isLaserActive = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Ulti")]
+    [SerializeField] private GameObject ultiPrefab;
+    [SerializeField] private int ultiCost = 7000;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        //ActivateLaser();
         StartCoroutine(DisableeShield());
     }
 
-    // Update is called once per frame
     private void Update()
     {
         Move();
         Fire();
+        UseUlti();
     }
 
     private void Move()
@@ -44,12 +45,15 @@ public class ShipScript : MonoBehaviour
         float y = Input.GetAxisRaw("Vertical");
 
         Vector3 direction = new Vector3(x, y, 0);
-        //Normalize the direction vector to ensure consistent speed (direction == 1) in all directions
         transform.position += direction.normalized * Speed * Time.deltaTime;
 
-        //Limit moving space
-        Vector3 TopLeftPoint = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -TopLeftPoint.x, TopLeftPoint.x), Mathf.Clamp(transform.position.y, -TopLeftPoint.y, TopLeftPoint.y), 0);
+        Vector3 TopLeftPoint = Camera.main.ScreenToWorldPoint(
+            new Vector3(Screen.width, Screen.height, 0));
+
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, -TopLeftPoint.x, TopLeftPoint.x),
+            Mathf.Clamp(transform.position.y, -TopLeftPoint.y, TopLeftPoint.y),
+            0);
     }
 
     private void Fire()
@@ -58,15 +62,44 @@ public class ShipScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            var bulletObj = Instantiate(BulletList[CurrentBulletTier], transform.position, Quaternion.identity);
+            var bulletObj = Instantiate(
+                BulletList[CurrentBulletTier],
+                transform.position,
+                Quaternion.identity);
+
             var bulletScript = bulletObj.GetComponent<BulletScipt>();
             if (bulletScript != null)
-            {
                 bulletScript.SetBulletTier(CurrentBulletTier);
-            }
+
             if (audioSource != null && firesound != null)
-            {
                 audioSource.PlayOneShot(firesound);
+        }
+    }
+
+    private void UseUlti()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("[ShipScript] Space pressed!");
+            
+            if (ultiPrefab == null)
+            {
+                Debug.LogError("[ShipScript] ultiPrefab is NULL! Please assign it in Inspector!");
+                return;
+            }
+
+            int currentScore = GameController.Instance.Score;
+            Debug.Log($"[ShipScript] Current score: {currentScore}, Ulti cost: {ultiCost}");
+
+            if (currentScore >= ultiCost)
+            {
+                Debug.Log("[ShipScript] Firing ulti!");
+                GameController.Instance.DeductScore(ultiCost);
+                Instantiate(ultiPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Debug.LogWarning($"[ShipScript] Not enough score! Need {ultiCost}, have {currentScore}");
             }
         }
     }
@@ -74,12 +107,14 @@ public class ShipScript : MonoBehaviour
     private IEnumerator DisableeShield()
     {
         yield return new WaitForSeconds(5f);
-        Shield.SetActive(false);
+        if (Shield != null)
+            Shield.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!Shield.activeSelf && (collision.CompareTag("Egg") || collision.CompareTag("Chicken")))
+        if (!Shield.activeSelf &&
+            (collision.CompareTag("Egg") || collision.CompareTag("Chicken")))
         {
             Die();
         }
@@ -87,14 +122,15 @@ public class ShipScript : MonoBehaviour
         {
             Destroy(collision.gameObject);
             GameController.Instance.AddScore(ScoreChickenLeg);
+
             currentChickenLegCount++;
+
             if (currentChickenLegCount >= chickenLegsPerTier)
             {
                 currentChickenLegCount = 0;
+
                 if (CurrentBulletTier < BulletList.Length - 1)
-                {
                     CurrentBulletTier++;
-                }
             }
         }
     }
@@ -108,7 +144,6 @@ public class ShipScript : MonoBehaviour
         }
 
         GameController.Instance.PlayerDied();
-
         Destroy(gameObject);
     }
 
@@ -151,7 +186,6 @@ public class ShipScript : MonoBehaviour
     private void ActivateLaser()
     {
         if (isLaserActive) return;
-
         StartCoroutine(LaserRoutine());
     }
 
@@ -160,11 +194,10 @@ public class ShipScript : MonoBehaviour
         isLaserActive = true;
 
         activeLaser = Instantiate(
-        laserBeamPrefab,
-        laserPoint.position,
-        Quaternion.identity,
-        laserPoint
-    );
+            laserBeamPrefab,
+            laserPoint.position,
+            Quaternion.identity,
+            laserPoint);
 
         yield return new WaitForSeconds(laserDuration);
 
