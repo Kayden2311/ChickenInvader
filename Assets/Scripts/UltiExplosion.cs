@@ -42,7 +42,8 @@ public class UltiExplosion : MonoBehaviour
 
         if (explosionVFX != null)
         {
-            Instantiate(explosionVFX, transform.position, Quaternion.identity);
+           var vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
+           Destroy(vfx,1f);
         }
 
         GameObject[] chickens = GameObject.FindGameObjectsWithTag("Chicken");

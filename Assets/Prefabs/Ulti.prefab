@@ -132,6 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2475ac02f4902ad4cb7e3ec948ed6b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UltiExplosion
-  explosionVFX: {fileID: 0}
+  explosionVFX: {fileID: 139366, guid: b185c1a9cf067374586d095111b15bd1, type: 3}
   moveSpeed: 8
   delayBeforeExplode: 0.3
